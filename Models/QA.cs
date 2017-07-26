@@ -14,8 +14,8 @@ namespace TriviaGame.Models
             this.correctAnswer = correctAnswer;
         }
 
-        private string question;
-        private List<String> wrongAnswers;
-        private string correctAnswer; 
+        public string question;
+        public List<String> wrongAnswers;
+        public string correctAnswer; 
     }
 }
