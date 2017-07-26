@@ -9,6 +9,6 @@ namespace TriviaGame.Components
 {
     public interface IQuestionGenerator
     {
-        List<QA> GenerateQuestions(); 
+        List<QA> GenerateQuestions(IList<KeyValuePair<string, string>> typeAndQueryPairs); 
     }
 }
