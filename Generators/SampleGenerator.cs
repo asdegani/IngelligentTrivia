@@ -35,8 +35,27 @@ namespace TriviaGame.Generators
 
         private QA generateQuestionFromSummaryResults(SummarySearchResult summary)
         {
-            // TODO get Q and A
-            return new QA("", "", new List<string>());
+            using (var httpClient = new HttpClient())
+            {
+                var url = "http://10.164.85.76:8000/questiongenerator/api/generateQuestionAnswerPairFromText";
+                var data = new { text = summary };
+                StringContent stringContent = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8,
+                    "application/json");
+                HttpResponseMessage response = httpClient.PostAsync(url, stringContent).Result;
+
+                if (response != null && response.IsSuccessStatusCode)
+                {
+                    object content = JsonConvert.DeserializeObject(
+                        response.Content.ReadAsStringAsync()
+                        .Result);
+                    JObject jObject = JObject.Parse(JsonConvert.SerializeObject(content));
+
+                    string question = (string)jObject["question"];
+                    string answer = (string)jObject["answer"];
+                    return new QA(question, answer, new List<string>());
+                }
+            }
+            return null;
         } 
 
         private SummarySearchResult findSummarySearchResult(KeyValuePair<string, string> typeAndQueryPair)

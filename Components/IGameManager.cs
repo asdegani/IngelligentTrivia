@@ -8,5 +8,6 @@ namespace TriviaGame.Components
 {
     public interface IGameManager
     {
+        string GetNextAction(string userResponse); 
     }
 }

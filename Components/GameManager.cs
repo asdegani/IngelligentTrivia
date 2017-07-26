@@ -15,7 +15,7 @@ namespace TriviaGame.Components
         private List<QA>.Enumerator qaEnumerator;
 
 
-        public void init()
+        public void Init()
         {
             generators = new List<IQuestionGenerator>();
             generators.Add(new SampleGenerator());
@@ -28,11 +28,12 @@ namespace TriviaGame.Components
             };
         }
 
-        public string getNextAction(string userResponse)
+        public string GetNextAction(string userResponse)
         {
             switch (userResponse)
             {
                 case "start":
+                    Init();
                     this.qaEnumerator = this.generators.FirstOrDefault().GenerateQuestions(pairsList).GetEnumerator();
                     this.qaEnumerator.MoveNext();
                     return qaEnumerator.Current.question;
