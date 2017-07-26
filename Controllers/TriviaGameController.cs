@@ -10,9 +10,14 @@ using Newtonsoft.Json.Linq;
 using TriviaGame.Components;
 using TriviaGame.Generators;
 using TriviaGame.Models;
+using Microsoft.Bot.Connector;
+using Microsoft.Bot.Builder.Dialogs;
+using System.Threading.Tasks;
+using System.Net;
 
 namespace TriviaGame.Controllers
 {
+    [BotAuthentication]
     [RoutePrefix("api/TriviaGame")]
     public class TriviaGameController : ApiController
     {
@@ -25,9 +30,20 @@ namespace TriviaGame.Controllers
 
         [Route("UserResponse")]
         [System.Web.Http.HttpPost]
-        public string UserResponse(UserResponseModel response)
+        public async Task<HttpResponseMessage> UserResponse([FromBody]Activity activity)
         {
-            return this.GameManager.GetNextAction(response.Response);
+            var connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+
+            if (activity.Type == ActivityTypes.Message)
+            {
+                await Conversation.SendAsync(activity, () => Dialogs.GameDialog.Dialog);
+            }
+            else
+            {
+                //HandleSystemMessage(activity);
+            }
+            var response = Request.CreateResponse(HttpStatusCode.OK);
+            return response;
         }
     }
 }

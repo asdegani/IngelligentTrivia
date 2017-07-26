@@ -38,7 +38,7 @@ namespace TriviaGame.Generators
             using (var httpClient = new HttpClient())
             {
                 var url = "http://10.164.85.76:8000/questiongenerator/api/generateQuestionAnswerPairFromText";
-                var data = new { text = summary };
+                var data = new { text = summary.summary };
                 StringContent stringContent = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8,
                     "application/json");
                 HttpResponseMessage response = httpClient.PostAsync(url, stringContent).Result;

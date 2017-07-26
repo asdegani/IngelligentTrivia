@@ -26,6 +26,14 @@ namespace TriviaGame.Components
                 new KeyValuePair<string, string>("Place", "New York"),
                 new KeyValuePair<string, string>("SportsTeam", "Real Madrid")
             };
+
+            this.qaEnumerator = this.generators.FirstOrDefault().GenerateQuestions(pairsList).GetEnumerator();
+        }
+
+        public string GetNextQuestion()
+        {
+            this.qaEnumerator.MoveNext();
+            return qaEnumerator.Current.question;
         }
 
         public string GetNextAction(string userResponse)
@@ -34,7 +42,6 @@ namespace TriviaGame.Components
             {
                 case "start":
                     Init();
-                    this.qaEnumerator = this.generators.FirstOrDefault().GenerateQuestions(pairsList).GetEnumerator();
                     this.qaEnumerator.MoveNext();
                     return qaEnumerator.Current.question;
 

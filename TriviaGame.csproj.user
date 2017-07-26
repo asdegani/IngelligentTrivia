@@ -3,6 +3,9 @@
   <PropertyGroup>
     <UseIISExpress>true</UseIISExpress>
   </PropertyGroup>
+  <PropertyGroup>
+    <ReferencePath>C:\Users\t-lishac\Source\Repos\IngelligentTrivia\packages\Unity.WebAPI.5.2.3\lib\net45\</ReferencePath>
+  </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">

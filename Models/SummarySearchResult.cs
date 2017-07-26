@@ -16,7 +16,7 @@ namespace TriviaGame.Models
 
         public string name { get; set; }
         //private IEnumerable<string> type { get; set; }
-        private string summary { get; set; }
+        public string summary { get; set; }
         private double resultScore { get; set; }
 
     }
