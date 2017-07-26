@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
@@ -8,6 +9,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
+using TriviaGame.App_Start;
 using TriviaGame.Providers;
 using TriviaGame.Models;
 
@@ -64,6 +66,11 @@ namespace TriviaGame
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+
+            HttpConfiguration httpConfig = new HttpConfiguration();
+            UnityConfig.Register(httpConfig);
+            WebApiConfig.Register(httpConfig);
+            app.UseWebApi(httpConfig);
         }
     }
 }

@@ -6,7 +6,7 @@ using TriviaGame.Generators;
 
 namespace TriviaGame.Components
 {
-    public class GameManager
+    public class GameManager : IGameManager
     {
 
         private List<IQuestionGenerator> generators;  
