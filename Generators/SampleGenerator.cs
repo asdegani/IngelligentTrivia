@@ -16,8 +16,19 @@ using TriviaGame.Models;
 
 namespace TriviaGame.Generators
 {
+    using System.IO;
+    using System.Xml;
+
     public class SampleGenerator : IQuestionGenerator
     {
+        private readonly string GoogleKnowledgeApiKey; 
+        public SampleGenerator()
+        {
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"AppSettings.config");
+            Hashtable hashtable = GetSettings(path);
+            GoogleKnowledgeApiKey = (string) hashtable["googleKnowledgeApiKey"]; 
+        }
+
         public List<QA> GenerateQuestions(IList<KeyValuePair<string, string>> typeAndQueryPairs)
         {
             IEnumerator<KeyValuePair<string, string>> enumerator = typeAndQueryPairs.GetEnumerator();
@@ -64,7 +75,7 @@ namespace TriviaGame.Generators
                 new Google.Apis.Kgsearch.v1.KgsearchService(new BaseClientService.Initializer
                 {
                     ApplicationName = "trivia-hackathon-2017", // "Intelligent Trivia Game",
-                    ApiKey = "AIzaSyArbQptaVvPHUQv-8VuA85WjEJMkfOZgjw"
+                    ApiKey = GoogleKnowledgeApiKey//
                 });
             EntitiesResource.SearchRequest search = service.Entities.Search();
             search.Indent = true;
@@ -92,6 +103,36 @@ namespace TriviaGame.Generators
             }
 
             return filterBestSummaryResult(summaries);
+        }
+
+        private Hashtable GetSettings(string path)
+        {
+            Hashtable hashtable = new Hashtable();
+            if (File.Exists(path))
+            {
+                StreamReader reader = new StreamReader
+                (
+                    new FileStream(
+                        path,
+                        FileMode.Open,
+                        FileAccess.Read,
+                        FileShare.Read)
+                );
+                XmlDocument doc = new XmlDocument();
+                string xmlIn = reader.ReadToEnd();
+                reader.Close();
+                doc.LoadXml(xmlIn);
+                foreach (XmlNode child in doc.ChildNodes)
+                    if (child.Name.Equals("Settings"))
+                        foreach (XmlNode node in child.ChildNodes)
+                            if (node.Name.Equals("add"))
+                                hashtable.Add
+                                (
+                                    node.Attributes["key"].Value,
+                                    node.Attributes["value"].Value
+                                );
+            }
+            return (hashtable);
         }
 
         private SummarySearchResult filterBestSummaryResult(List<SummarySearchResult> summaries)

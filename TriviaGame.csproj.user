@@ -4,7 +4,7 @@
     <UseIISExpress>true</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup>
-    <ReferencePath>C:\Users\t-lishac\Source\Repos\IngelligentTrivia\packages\Unity.WebAPI.5.2.3\lib\net45\</ReferencePath>
+    <ReferencePath>C:\Users\t-lishac\Source\Repos\IngelligentTrivia\packages\Unity.WebAPI.5.2.3\lib\net45\;C:\Users\yagoodma\Workspace\IngelligentTrivia\packages\Unity.WebAPI.5.2.3\lib\net45\</ReferencePath>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
